@@ -1,0 +1,26 @@
+			string[] colorid = new string[] { "red", "yellow", "white", "blue", "black" };
+            string[] sizeid = new string[] {"xsmall", "small", "medium", "large", "xlarge", "xxlarge"};
+            string[] typeid = new string[] {"tanktop", "tshirt", "vneck", "hoodie", "zipup", "sweater"};
+            string[] sexid = new string[] { "male", "female" };
+            string[] designid = new string[] {"tiger", "socal", "barrens", "woman1", "black", "white", "pink"};
+
+            foreach(string element in colorid)
+            {
+
+                foreach(string element2 in sizeid)
+                {
+                    foreach(string element3 in typeid)
+                    {
+
+                        foreach (string element4 in sexid)
+                        {
+                            foreach(string element5 in designid)
+                            {
+
+                                pushInserts(element,element2,element3,element4,element5);
+
+                            }
+                        }
+                    }
+                }
+            }
