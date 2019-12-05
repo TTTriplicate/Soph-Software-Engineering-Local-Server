@@ -66,7 +66,7 @@
 		}
 		
 		function filter($limits){//sex, size, design, color, style
-			$fields = array("sexid=", "sizeid=", "designid=", "colorid=", "typeid=");
+			$fields = array("item.sexid=", "item.sizeid=", "item.designid=", "item.colorid=", "item.typeid=");
 			$queryString = array("WHERE");
 
 
@@ -81,8 +81,8 @@
 				}
 			}
 			
-			
-			$query = mysqli_query($this->con, "SELECT FILEPATH, SEXID, COLORID, SIZEID, TYPEID, DESIGNID FROM item " . implode(" ", $queryString));
+			#echo implode(" ", $queryString);
+			$query = mysqli_query($this->con, "SELECT FILEPATH, SEXID, COLORID, SIZEID, item.TYPEID, DESIGNID, PRICE FROM item JOIN tshirttype on item.TYPEID=tshirttype.TYPEID " . implode(" ", $queryString));
 			
 			$table = array();
 			
