@@ -7,13 +7,13 @@
 		function __construct(){
 			require_once dirname(__FILE__) . '/db_connect.php';
 			
-        $this->con = mysqli_connect("localhost", "root", "") or die(mysqli_error());
+        $this->con = mysqli_connect("localhost", "root", "S0ph0m0reENG2") or die(mysqli_error());
  
-        $this->db = mysqli_select_db($this->con, "socalstyle") or die(mysqli_error()) or die(mysqli_error());
+        $this->db = mysqli_select_db($this->con, "SOCALSTYLE") or die(mysqli_error()) or die(mysqli_error());
 		}
 		
 		function getall(){
-			$query = mysqli_query($this->con, "SELECT itemid FROM item WHERE colorid=\"BLACK\"");
+			$query = mysqli_query($this->con, "SELECT ITEMID FROM ITEM WHERE COLORID=\"BLACK\"");
 			
 			$table = array();
 				
@@ -49,7 +49,7 @@
 		}
 		
 		function popPage($which){
-			$query = mysqli_query($this->con, "SELECT * FROM item WHERE sexid=\"" . $which . "\"" );
+			$query = mysqli_query($this->con, "SELECT * FROM ITEM WHERE SEXID=\"" . $which . "\"" );
 			
 			$table = array();
 			
@@ -66,7 +66,7 @@
 		}
 		
 		function filter($limits){//sex, size, design, color, style
-			$fields = array("item.sexid=", "item.sizeid=", "item.designid=", "item.colorid=", "item.typeid=");
+			$fields = array("ITEM.SEXID=", "ITEM.SIZEID=", "ITEM.DESIGNID=", "ITEM.COLORID=", "ITEM.TYPEID=");
 			$queryString = array("WHERE");
 
 
@@ -82,7 +82,7 @@
 			}
 			
 			#echo implode(" ", $queryString);
-			$query = mysqli_query($this->con, "SELECT FILEPATH, SEXID, COLORID, SIZEID, item.TYPEID, DESIGNID, PRICE FROM item JOIN tshirttype on item.TYPEID=tshirttype.TYPEID " . implode(" ", $queryString));
+			$query = mysqli_query($this->con, "SELECT FILEPATH, SEXID, COLORID, SIZEID, ITEM.TYPEID, DESIGNID, PRICE FROM ITEM JOIN TSHIRTTYPE on ITEM.TYPEID=TSHIRTTYPE.TYPEID " . implode(" ", $queryString));
 			
 			$table = array();
 			
@@ -100,7 +100,7 @@
 		}
 		
 		function login($user, $pass){#add collate to query
-			$query = mysqli_query($this->con, "SELECT FNAME, LNAME, CUSTOMERID FROM customer where emailadress=\"" . $user . "\" AND PASSWORD=\"" . $pass . "\"");
+			$query = mysqli_query($this->con, "SELECT FNAME, LNAME, CUSTOMERID FROM CUSTOMER where EMAILADRESS=\"" . $user . "\" AND PASSWORD=\"" . $pass . "\"");
 			
 			$result = array();
 			
@@ -115,7 +115,7 @@
 		}
 		
 		function register($newUser){#maintain the same order in URL construction....add collate to push
-			$query = mysqli_query($this->con, "SELECT * FROM customer where emailadress=\"" . $newUser[2] . "\"");
+			$query = mysqli_query($this->con, "SELECT * FROM CUSTOMER where EMAILADRESS=\"" . $newUser[2] . "\"");
 			
 			$result = array();
 			$parts = implode("\", \"", $newUser);
@@ -123,7 +123,7 @@
 				array_push($result, 'registration', 'failed: email address already registered.');
 			}
 			else{
-				$query = mysqli_query($this->con, "INSERT into customer(FNAME, LNAME, EMAILADRESS, PASSWORD) values(\"" . $parts . "\")");
+				$query = mysqli_query($this->con, "INSERT into CUSTOMER(FNAME, LNAME, EMAILADRESS, PASSWORD) values(\"" . $parts . "\")");
 				if($query){
 					array_push($result, 'registration', 'success');
 				}
@@ -149,9 +149,9 @@
 		}
 		
 		function addToCart($id, $desc){
-			$queryString = "INSERT INTO cart (customerid, itemid, quantity)  VALUES($id, ( SELECT itemid FROM item WHERE SEXID = \"" . $desc[0] ."\" AND SIZEID=\"" . $desc[1] . "\" AND colorID=\"". $desc[2] . "\" AND typeid=\"" . $desc[3] . "\" AND designid=\"" . $desc[4] . "\"), 1) ON DUPLICATE KEY UPDATE QUANTITY = QUANTITY + 1";
+			$queryString = "INSERT INTO CART (CUSTOMERID, ITEMID, QUANTITY)  VALUES($id, ( SELECT ITEMID FROM ITEM WHERE SEXID = \"" . $desc[0] ."\" AND SIZEID=\"" . $desc[1] . "\" AND COLORID=\"". $desc[2] . "\" AND TYPEID=\"" . $desc[3] . "\" AND DESIGNID=\"" . $desc[4] . "\"), 1) ON DUPLICATE KEY UPDATE QUANTITY = QUANTITY + 1";
 			$query = mysqli_query($this->con, $queryString);
-			echo $queryString;
+#			echo $queryString;
 			$result = array();
 			if ($query){
 				array_push($result, "added", "success");
@@ -162,9 +162,9 @@
 			$inJSON = json_encode($result);
 			echo $inJSON;
 		}
-		#SELECT itemid, quantity, price from (tshirttype join item on tshirttype.typeid=item.typeid) join cart on cart.itemid = item.itemid WHERE cart.CUSTOMERID = $id
-		function getFromCart($id){#(SELECT itemid, QUANTITY FROM cart WHERE customerid = 3 AND quantity > 0) SELECT price from (tshirttype join item on tshirttype.typeid=item.typeid) join cart on cart.itemid = item.itemid WHERE cart.CUSTOMERID = 3
-			$queryString = "SELECT cart.itemid, cart.quantity, price from (tshirttype join item on tshirttype.typeid=item.typeid) join cart on cart.itemid = item.itemid WHERE cart.CUSTOMERID =$id";
+		#SELECT ITEMID, QUANTITY, PRICE from (TSHIRTTYPE join ITEM on TSHIRTTYPE.TYPEID=ITEM.TYPEID) join CART on CART.ITEMID = ITEM.ITEMID WHERE CART.CUSTOMERID = $id
+		function getFromCart($id){#(SELECT ITEMID, QUANTITY FROM CART WHERE CUSTOMERID = 3 AND QUANTITY > 0) SELECT PRICE from (TSHIRTTYPE join ITEM on TSHIRTTYPE.TYPEID=ITEM.TYPEID) join CART on CART.ITEMID = ITEM.ITEMID WHERE CART.CUSTOMERID = 3
+			$queryString = "SELECT CART.ITEMID, CART.QUANTITY, PRICE from (TSHIRTTYPE join ITEM on TSHIRTTYPE.TYPEID=ITEM.TYPEID) join CART on CART.ITEMID = ITEM.ITEMID WHERE CART.CUSTOMERID =$id";
 			$query = mysqli_query($this->con, $queryString);
 			
 			$result = array();
@@ -178,8 +178,8 @@
 			echo $inJSON;
 		}
 		
-		function getDesc($itemID){
-			$queryString = "SELECT SEXID, SIZEID, COLORID, DESIGNID, item.TYPEID, FILEPATH, PRICE FROM item join tshirttype on item.typeid = tshirttype.typeid WHERE itemid = " . $itemID;
+		function getDesc($ITEMID){
+			$queryString = "SELECT SEXID, SIZEID, COLORID, DESIGNID, ITEM.TYPEID, FILEPATH, PRICE FROM ITEM join TSHIRTTYPE on ITEM.TYPEID = TSHIRTTYPE.TYPEID WHERE ITEMID = " . $ITEMID;
 			$query = mysqli_query($this->con, $queryString);
 			
 			$result = array();
@@ -192,7 +192,7 @@
 			$inJSON = json_encode($result);
 			echo $inJSON;
 		}
-		
+	
 		function populate(){
 			$colors = array( "red", "yellow", "white", "blue", "black" );
 			$sizes = array("xsmall", "small", "medium", "large", "xlarge", "xxlarge");
@@ -203,26 +203,33 @@
 			$result = array();
 			
 			foreach($colors as $color){
+				$query = mysqli_query($this->con, "INSERT INTO COLOR(COLORID) VALUES(\"" . $color ."\")");
 				foreach($sizes as $size){
+					$query = mysqli_query($this->con, "INSERT INTO SIZES(SIZEID) VALUES(\"" . $size ."\")");
 					foreach($types as $type){
+						$query = mysqli_query($this->con, "INSERT INTO TSHIRTTYPE(TYPEID) VALUES(\"" . $type ."\")");
 						foreach($sexes as $sex){
+							$query = mysqli_query($this->con, "INSERT INTO SEX(SEXID) VALUES(\"" . $sex ."\")");
 							foreach($designs as $design){
+								$query = mysqli_query($this->con, "INSERT INTO DESIGN(DESIGNID) VALUES(\"" . $design ."\")");
 								$query = mysqli_query($this->con, "INSERT INTO ITEM(COLORID, SIZEID, TYPEID, SEXID, DESIGNID) VALUES(\"" . $color . "\",\"" . $size .  "\",\"" . $type . "\",\"" . $sex . "\",\"" . $design . "\")");
 							}
 						}
 					}
 				}
 			}
+			$query =mysqli_query($this->con, "UPDATE ITEM SET FILEPATH = (SELECT CONCAT(COLORID, TYPEID, SEXID, \".jpg\")");
+
 			$inJSON = json_encode($result);
 			echo $inJSON;
 
 		}
-		
-#		function reduceCount($itemid){
-#			$query = mysqli_query($this->con, "SELECT quantity FROM quantity where itemid = \"" . $itemid . "\"");
+	 
+#		function reduceCount($ITEMID){
+#			$query = mysqli_query($this->con, "SELECT QUANTITY FROM QUANTITY where ITEMID = \"" . $ITEMID . "\"");
 #			
 #			if($query->num_rows > 0){
-#				$quantity = query->fetch_assoc()['quantity'] - 1;
+#				$QUANTITY = query->fetch_assoc()['QUANTITY'] - 1;
 #				$query = mysqli_query($this->con, "UPDATE 
 #		}
 
