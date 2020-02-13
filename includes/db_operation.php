@@ -47,24 +47,6 @@
 			$inJSON = json_encode($table);
 			echo $inJSON;		
 		}
-
-		function getUser($id){
-			$queryString = "SELECT LNAME, FNAME, EMAILADRESS, PHONE FROM CUSTOMER WHERE CUSTOMERID=\"" . $id . "\"");
-			$query = mysqli_query($this->con, $queryString);
-
-			$table = array();
-
-			if ($query->num_rows > 0){
-				while($row = $query->fetch_assoc()){
-					array_push($table, $row);
-				}
-			}
-			else{
-				echo "0 Results";
-			}
-			$inJSON = json_encode($table);
-			echo $inJSON;
-		}
 		
 		function popPage($which){
 			$query = mysqli_query($this->con, "SELECT * FROM ITEM WHERE SEXID=\"" . $which . "\"" );
