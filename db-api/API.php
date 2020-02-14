@@ -94,6 +94,12 @@
 				$response['message'] = 'Request successfully completed';
 				$response['table'] = $db->getDesc($_GET['itemid']);
 				break;
+			case 'get':
+				$db = new DbOperation();
+				$response['error'] = false;
+				$response['message'] = 'Request successfully completed';
+				$response['table'] = $db->get($_GET['what'], $_GET['where']);
+				break;
 		}
 		
 	}else{
