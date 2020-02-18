@@ -100,6 +100,12 @@
 				$response['message'] = 'Request successfully completed';
 				$response['table'] = $db->get($_GET['what'], $_GET['where']);
 				break;
+			case 'purchase':				
+				$db = new DbOperation();
+				$response['error'] = false;
+				$response['message'] = 'Request successfully completed';
+				$response['table'] = $db->purchase($_GET['id']);
+				break;
 		}
 		
 	}else{

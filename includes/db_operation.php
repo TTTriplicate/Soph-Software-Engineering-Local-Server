@@ -136,6 +136,38 @@
 			echo $inJSON;
 		}
 		
+		function userData($id){
+			$query = mysqli_query($this->con, "SELECT FNAME, LNAME, EMAILADRESS FROM CUSTOMER WHERE CUSTOMERID=\"" . $id . "\"");
+
+			$result = array();
+			
+			if ($query->num_rows == 1){
+				array_push($result, $query->fetch_assoc());
+			}
+			else{
+				array_push($result, 'status', 'false');
+			}
+			$inJSON = json_encode($result);
+			echo $inJSON;
+		}
+		function purchase($id){
+			$queryString = "insert into TRANSACTIONS(CUSTOMERID, ITEMID, QUANTITY, DATE)
+				select CART.CUSTOMERID, CART.ITEMID, CART.QUANTITY, now()
+				from CART
+				where CART.CUSTOMERID = \"" . $id . "\"";
+			$query = mysqli_query($this->con, $queryString);
+			$result = array();
+			if($query){
+				$clear = mysqli_query($this->con, "DELETE FROM CART WHERE CUSTOMERID = \"" . $id . "\"");
+				if($clear){
+					array_push($result, 'TRANSACTION', 'COMPLETE');
+				}
+			$inJSON = json_encode($result);
+			echo $inJSON;
+
+			}
+		}
+
 		function arrayTest($array){
 #			echo $array . "\n";
 			for ($i = 0; $i < sizeOf($array); $i += 1){
