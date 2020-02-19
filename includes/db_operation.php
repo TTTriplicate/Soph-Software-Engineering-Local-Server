@@ -168,6 +168,23 @@
 			}
 		}
 
+		function getTransactions($id){
+			$query = mysqli_query($this->con, "SELECT ITEMID, QUANTITY, DATE FROM TRANSACTIONS WHERE USERID=\"" . $id . "\"");
+
+			$result = array();
+
+			if ($query->num_rows > 0){
+				while($row = $query->fetch_assoc()){
+					array_push($table, $row);
+				}
+			}
+			else {
+				echo "0 results";
+			}		
+			$inJSON = json_encode($table);
+			echo $inJSON;		
+		}
+		
 		function arrayTest($array){
 #			echo $array . "\n";
 			for ($i = 0; $i < sizeOf($array); $i += 1){
