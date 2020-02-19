@@ -169,9 +169,9 @@
 		}
 
 		function getTransactions($id){
-			$query = mysqli_query($this->con, "SELECT ITEMID, QUANTITY, DATE FROM TRANSACTIONS WHERE USERID=\"" . $id . "\"");
+			$query = mysqli_query($this->con, "SELECT ITEMID, QUANTITY, DATE FROM TRANSACTIONS WHERE CUSTOMERID=\"" . $id . "\"");
 
-			$result = array();
+			$table = array();
 
 			if ($query->num_rows > 0){
 				while($row = $query->fetch_assoc()){
