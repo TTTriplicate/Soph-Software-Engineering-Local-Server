@@ -106,6 +106,12 @@
 				$response['message'] = 'Request successfully completed';
 				$response['table'] = $db->purchase($_GET['id']);
 				break;
+			case 'history':
+				$db = new DbOperation();
+				$response['error'] = false;
+				$response['message'] = 'Request successfully completed';
+				$response['table'] = $db->getTransactions($_GET['id']);
+				break;
 		}
 		
 	}else{
