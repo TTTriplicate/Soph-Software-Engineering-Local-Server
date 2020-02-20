@@ -169,7 +169,7 @@
 		}
 
 		function getTransactions($id){
-			$query = mysqli_query($this->con, "SELECT ITEMID, QUANTITY, DATE FROM TRANSACTIONS WHERE CUSTOMERID=\"" . $id . "\"");
+			$query = mysqli_query($this->con, "SELECT ITEMID, QUANTITY, DATE FROM TRANSACTIONS WHERE CUSTOMERID=\"" . $id . "\" ORDER BY DATE DESC");
 
 			$table = array();
 
