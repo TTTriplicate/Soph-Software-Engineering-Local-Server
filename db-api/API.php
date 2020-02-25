@@ -70,12 +70,12 @@
 				$response['message'] = 'Request successfully completed';
 				$response['table'] = $db->filter($_GET['limits']);
 				break;
-			case 'populate':
+		/*	case 'populate':
 				$db = new DbOperation();
 				$response['error'] = false; 
 				$response['message'] = 'Request successfully completed';
 				$response['table'] = $db->populate();
-				break;
+				break;*/
 			case 'addToCart':
 				$db = new DbOperation();
 				$response['error'] = false; 

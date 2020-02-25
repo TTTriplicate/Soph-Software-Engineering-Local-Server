@@ -1,5 +1,4 @@
 <?PHP
-#this comment exists only to test SSH to github	
 	class DbOperation{
 		
 		private $con;
@@ -185,18 +184,6 @@
 			echo $inJSON;		
 		}
 		
-		function arrayTest($array){
-#			echo $array . "\n";
-			for ($i = 0; $i < sizeOf($array); $i += 1){
-				if ($array[$i] != ""){
-					echo $array[$i] . "\n";
-				}
-				else{
-					echo "Empty String\n";
-				}
-			}
-		}
-		
 		function addToCart($id, $desc){
 			$queryString = "INSERT INTO CART (CUSTOMERID, ITEMID, QUANTITY)  VALUES($id, ( SELECT ITEMID FROM ITEM WHERE SEXID = \"" . $desc[0] ."\" AND SIZEID=\"" . $desc[1] . "\" AND COLORID=\"". $desc[2] . "\" AND TYPEID=\"" . $desc[3] . "\" AND DESIGNID=\"" . $desc[4] . "\"), 1) ON DUPLICATE KEY UPDATE QUANTITY = QUANTITY + 1";
 			$query = mysqli_query($this->con, $queryString);
@@ -242,7 +229,7 @@
 			echo $inJSON;
 		}
 	
-		function populate(){
+/*		function populate(){
 			$colors = array( "red", "yellow", "white", "blue", "black" );
 			$sizes = array("xsmall", "small", "medium", "large", "xlarge", "xxlarge");
 			$types = array("tanktop", "tshirt", "vneck", "hoodie", "zipup", "sweater");
@@ -273,14 +260,6 @@
 			echo $inJSON;
 
 		}
-	 
-#		function reduceCount($ITEMID){
-#			$query = mysqli_query($this->con, "SELECT QUANTITY FROM QUANTITY where ITEMID = \"" . $ITEMID . "\"");
-#			
-#			if($query->num_rows > 0){
-#				$QUANTITY = query->fetch_assoc()['QUANTITY'] - 1;
-#				$query = mysqli_query($this->con, "UPDATE 
-#		}
-
+ */	 
 	}
 ?>
