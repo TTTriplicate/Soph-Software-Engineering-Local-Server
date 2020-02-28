@@ -17,9 +17,7 @@
 			$table = array();
 				
 			if ($query->num_rows > 0) {
-				// output data of each row
 				while($row = $query->fetch_assoc()) {
-#					echo $row["id"] . "\t" . $row["country"] . "\t" . $row["city"] ."\n";
 					array_push($table, $row);
 				}
 				
@@ -80,7 +78,6 @@
 				}
 			}
 			
-			#echo implode(" ", $queryString);
 			$query = mysqli_query($this->con, "SELECT FILEPATH, SEXID, COLORID, SIZEID, ITEM.TYPEID, DESIGNID, PRICE FROM ITEM JOIN TSHIRTTYPE on ITEM.TYPEID=TSHIRTTYPE.TYPEID " . implode(" ", $queryString));
 			
 			$table = array();
@@ -106,9 +103,6 @@
 			if ($query->num_rows == 1){
 				array_push($result, $query->fetch_assoc());
 			}
-#			else{
-#				array_push($result, 'status', 'false');
-#			}
 			$inJSON = json_encode($result);
 			echo $inJSON;
 		}
@@ -187,7 +181,6 @@
 		function addToCart($id, $desc){
 			$queryString = "INSERT INTO CART (CUSTOMERID, ITEMID, QUANTITY)  VALUES($id, ( SELECT ITEMID FROM ITEM WHERE SEXID = \"" . $desc[0] ."\" AND SIZEID=\"" . $desc[1] . "\" AND COLORID=\"". $desc[2] . "\" AND TYPEID=\"" . $desc[3] . "\" AND DESIGNID=\"" . $desc[4] . "\"), 1) ON DUPLICATE KEY UPDATE QUANTITY = QUANTITY + 1";
 			$query = mysqli_query($this->con, $queryString);
-#			echo $queryString;
 			$result = array();
 			if ($query){
 				array_push($result, "added", "success");
