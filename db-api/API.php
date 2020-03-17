@@ -112,6 +112,12 @@
 				$response['message'] = 'Request successfully completed';
 				$response['table'] = $db->getTransactions($_GET['id']);
 				break;
+			case 'customerInfo':
+				$db = new DbOperation();
+				$response['error'] = false;
+				$response['message'] = 'Request successfully completed';
+				$response['table'] = $db->userData($_GET['id']);
+				break;
 		}
 		
 	}else{

@@ -130,7 +130,7 @@
 		}
 		
 		function userData($id){
-			$query = mysqli_query($this->con, "SELECT FNAME, LNAME, EMAILADRESS FROM CUSTOMER WHERE CUSTOMERID=\"" . $id . "\"");
+			$query = mysqli_query($this->con, "SELECT FNAME, LNAME, EMAILADRESS, ADDRESS, CITY, STATE FROM CUSTOMER WHERE CUSTOMERID=\"" . $id . "\"");
 
 			$result = array();
 			
