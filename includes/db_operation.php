@@ -155,7 +155,7 @@
 		
 			$queryString = "UPDATE CUSTOMER SET \n";
 			for($i = 0; $i < sizeof($updateFields); $i++){
-				$queryString .= $updateFields[$i] . "=\"" . $updates[$i] . "\"\n";
+				$queryString .= $updateFields[$i] . "=\"" . $updates[$i] . "\"";
 				if($i < sizeof($updateFields) -1){
 					$queryString .= ",";
 				}	
