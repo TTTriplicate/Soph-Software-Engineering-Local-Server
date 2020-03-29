@@ -155,10 +155,14 @@
 		
 			$queryString = "UPDATE CUSTOMER SET \n";
 			for($i = 0; $i < sizeof($updateFields); $i++){
-				$queryString += $updateFields[$i] . "=\"" . $updates[$i] . "\"\n";
+				$queryString .= $updateFields[$i] . "=\"" . $updates[$i] . "\"\n";
+				if($i < sizeof($updateFields) -1){
+					$queryString .= ",";
+				}	
 			}
 
-			$queryString += "WHERE PASSWORD=\"" . $credentials[1] ."\" AND EMAILADRESS =\"" . $credentials[0] . "\"";
+			$queryString .= "WHERE PASSWORD=\"" . $credentials[1] ."\" AND EMAILADRESS =\"" . $credentials[0] . "\"";
+			echo $queryString;
 			$query = mysqli_query($this->con, $queryString);
 
 			$result = array();
