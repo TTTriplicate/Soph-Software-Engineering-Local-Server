@@ -118,6 +118,12 @@
 				$response['message'] = 'Request successfully completed';
 				$response['table'] = $db->userData($_GET['id']);
 				break;
+			case 'customerUpdate':
+				$db = new DbOperation();
+				$response['error'] = false;
+				$response['message'] = 'Request successfully completed';
+				$response['table'] = $db->updateUser($_GET['updates'], $_GET['credentials']);
+				break;
 		}
 		
 	}else{
