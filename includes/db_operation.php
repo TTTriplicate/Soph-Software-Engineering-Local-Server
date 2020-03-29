@@ -129,6 +129,50 @@
 			echo $inJSON;
 		}
 		
+		function updateUser($toUpdate, $credentials){#FNAME, LNAME, ADDRESS, CITY, STATE
+			$updateFields = array();
+			$updates = array();
+			foreach($toUpdate as $piece){
+				if($piece != ""){
+					array_push($updates, $piece);
+				}
+			}
+			if($toUpdate[0] != ""){
+				array_push($updateFields, "FNAME");
+			}
+			if($toUpdate[1]!= ""){
+				array_push($updateFields, "LNAME");
+			}
+			if($toUpdate[2] != ""){
+				array_push($updateFields, "ADDRESS");
+			}
+			if($toUpdate[3] != ""){
+				array_push($updateFields, "CITY");
+			}
+			if($toUpdate[4] != ""){
+				array_push($updateFields, "STATE");
+			}
+		
+			$queryString = "UPDATE CUSTOMER SET \n";
+			for($i = 0; $i < sizeof($updateFields); $i++){
+				$queryString += $updateFields[$i] . "=\"" . $updates[$i] . "\"\n";
+			}
+
+			$queryString += "WHERE PASSWORD=\"" . $credentials[1] ."\" AND EMAILADRESS =\"" . $credentials[0] . "\"";
+			$query = mysqli_query($this->con, $queryString);
+
+			$result = array();
+			if($query){
+				array_push($result,"status", "Update Successful");
+			}
+			else{
+				array_push($result,"status", "Update Failed");
+			}
+			$inJSON = json_encode($result);
+			echo $inJSON;
+
+		}
+		
 		function userData($id){
 			$query = mysqli_query($this->con, "SELECT FNAME, LNAME, EMAILADRESS, ADDRESS, CITY, STATE FROM CUSTOMER WHERE CUSTOMERID=\"" . $id . "\"");
 
@@ -192,6 +236,7 @@
 			echo $inJSON;
 		}
 		#SELECT ITEMID, QUANTITY, PRICE from (TSHIRTTYPE join ITEM on TSHIRTTYPE.TYPEID=ITEM.TYPEID) join CART on CART.ITEMID = ITEM.ITEMID WHERE CART.CUSTOMERID = $id
+		
 		function getFromCart($id){#(SELECT ITEMID, QUANTITY FROM CART WHERE CUSTOMERID = 3 AND QUANTITY > 0) SELECT PRICE from (TSHIRTTYPE join ITEM on TSHIRTTYPE.TYPEID=ITEM.TYPEID) join CART on CART.ITEMID = ITEM.ITEMID WHERE CART.CUSTOMERID = 3
 			$queryString = "SELECT CART.ITEMID, CART.QUANTITY, PRICE from (TSHIRTTYPE join ITEM on TSHIRTTYPE.TYPEID=ITEM.TYPEID) join CART on CART.ITEMID = ITEM.ITEMID WHERE CART.CUSTOMERID =$id";
 			$query = mysqli_query($this->con, $queryString);
